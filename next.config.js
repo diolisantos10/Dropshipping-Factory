@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Prevent webpack from trying to bundle Node.js-only server packages
+  serverExternalPackages: ['cheerio', 'axios', 'sharp'],
   images: {
     remotePatterns: [
       {
