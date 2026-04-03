@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { getPublishingProvider } from "@/providers/publishing";
 import type { PublishJob } from "@prisma/client";
@@ -41,7 +42,7 @@ export async function createPublishJob(
       productId,
       videoId: video?.id,
       channel,
-      payload: payload ?? {},
+      payload: (payload ?? {}) as Prisma.InputJsonValue,
       status: "PENDING",
     },
   });

@@ -108,40 +108,43 @@ export default function PublishingPage() {
               </div>
 
               {/* Package Preview */}
-              {job.payload && Object.keys(job.payload).length > 0 && (
-                <div className="rounded bg-gray-800 p-3 space-y-2">
-                  <p className="text-xs font-medium text-gray-400">Package Preview</p>
+              {job.payload && Object.keys(job.payload).length > 0 && (() => {
+                const p = job.payload as Record<string, string | number | undefined>;
+                return (
+                  <div className="rounded bg-gray-800 p-3 space-y-2">
+                    <p className="text-xs font-medium text-gray-400">Package Preview</p>
 
-                  {job.payload.caption && (
-                    <div>
-                      <p className="text-xs text-gray-500">Caption</p>
-                      <p className="text-sm text-gray-200 mt-0.5 whitespace-pre-line">
-                        {String(job.payload.caption)}
+                    {p.caption && (
+                      <div>
+                        <p className="text-xs text-gray-500">Caption</p>
+                        <p className="text-sm text-gray-200 mt-0.5 whitespace-pre-line">
+                          {String(p.caption)}
+                        </p>
+                      </div>
+                    )}
+
+                    {p.videoUrl && String(p.videoUrl).startsWith("http") && (
+                      <div>
+                        <p className="text-xs text-gray-500">Video URL</p>
+                        <a
+                          href={String(p.videoUrl)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-xs text-indigo-400 hover:underline break-all"
+                        >
+                          {String(p.videoUrl)}
+                        </a>
+                      </div>
+                    )}
+
+                    {p.characterCount !== undefined && (
+                      <p className="text-xs text-gray-500">
+                        Caption length: {String(p.characterCount)} chars
                       </p>
-                    </div>
-                  )}
-
-                  {job.payload.videoUrl && String(job.payload.videoUrl).startsWith("http") && (
-                    <div>
-                      <p className="text-xs text-gray-500">Video URL</p>
-                      <a
-                        href={String(job.payload.videoUrl)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-xs text-indigo-400 hover:underline break-all"
-                      >
-                        {String(job.payload.videoUrl)}
-                      </a>
-                    </div>
-                  )}
-
-                  {job.payload.characterCount !== undefined && (
-                    <p className="text-xs text-gray-500">
-                      Caption length: {String(job.payload.characterCount)} chars
-                    </p>
-                  )}
-                </div>
-              )}
+                    )}
+                  </div>
+                );
+              })()}
 
               {/* Result */}
               {job.result && (

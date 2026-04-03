@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // Prevent webpack from trying to bundle Node.js-only server packages
-  serverExternalPackages: ['cheerio', 'axios', 'sharp'],
+  experimental: {
+    // Next.js 14.1.x uses this key (serverExternalPackages became stable in 14.2+)
+    serverComponentsExternalPackages: ['cheerio', 'axios', 'sharp', 'openai'],
+  },
   images: {
     remotePatterns: [
       {

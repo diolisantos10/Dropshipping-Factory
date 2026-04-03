@@ -78,7 +78,7 @@ export async function scrapeAliExpressProduct(url: string): Promise<AliExpressRa
   const scriptContent = $("script").toArray().map((s) => $(s).html() || "").join("\n");
 
   // Try to extract from window.runParams or __GLOBAL_DATA__
-  const imageMatches = scriptContent.matchAll(/"imagePathList":\s*\[([^\]]+)\]/g);
+  const imageMatches = Array.from(scriptContent.matchAll(/"imagePathList":\s*\[([^\]]+)\]/g));
   for (const match of imageMatches) {
     const urls = match[1].match(/"(https?:\/\/[^"]+\.(?:jpg|jpeg|png|webp)[^"]*)"/gi);
     if (urls) {

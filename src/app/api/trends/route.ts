@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 import { CreateTrendReportSchema } from "@/lib/schemas";
 import { prisma } from "@/lib/prisma";
 
@@ -25,7 +26,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const report = await prisma.trendReport.create({ data: parsed.data });
+    const report = await prisma.trendReport.create({
+      data: {
+        title: parsed.data.title,
+        summary: parsed.data.summary,
+        data: (parsed.data.data as Prisma.InputJsonValue | undefined) ?? Prisma.JsonNull,
+      },
+    });
     return NextResponse.json(report, { status: 201 });
   } catch (error) {
     return NextResponse.json({ error: "Failed to create trend report" }, { status: 500 });
